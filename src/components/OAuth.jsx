@@ -19,13 +19,10 @@ function OAuth() {
 
       // Check for user
       const docRef = doc(db, 'users', user.uid)
-      console.log('docRef: ', docRef)
       const docSnap = await getDoc(docRef)
-      console.log('docSnap: ', docSnap)
       
       // If user doesn't exist, create user
       if (!docSnap.exists()) {
-        console.log('IF STARTED')
         await setDoc(doc(db, 'users', user.uid), {
           name: user.displayName,
           email: user.email,
@@ -35,7 +32,6 @@ function OAuth() {
       navigate('/')
     } catch (error) {
       toast.error('Could nor authorize with Google')
-      console.log(error)
     }
   }
 
