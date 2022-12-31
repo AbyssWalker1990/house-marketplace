@@ -4,6 +4,7 @@ import { collection, getDocs, query, orderBy, limit, where, startAfter } from "f
 import { db } from "../firebase.config"
 import { toast } from "react-toastify"
 import Spinner from "../components/Spinner"
+import ListingItem from "../components/ListingItem"
 
 
 function Category() {
@@ -13,7 +14,6 @@ function Category() {
   const params = useParams()
 
   useEffect(() => {
-    console.log('fire')
     const fetchListings = async () => {
       try {
         // Make reference to listings table
@@ -53,7 +53,7 @@ function Category() {
           <main>
             <ul className="categoryListings">
               {listings.map((listing) => (
-                <h3 key={listing.id}>{listing.data.name}</h3>
+                <ListingItem key={listing.id} listing={listing.data} id={listing.id} />
               ))}
             </ul>
           </main>
