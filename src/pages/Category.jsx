@@ -24,7 +24,6 @@ function Category() {
           orderBy('timestamp', 'desc'), limit(10))
 
         const querySnap = await getDocs(q)
-
         const listings = []
         querySnap.forEach((doc) => {
           return listings.push({
