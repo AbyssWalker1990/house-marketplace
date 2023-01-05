@@ -6,7 +6,7 @@ import bathtubIcon from '../assets/svg/bathtubIcon.svg'
 function ListingItem({ listing, id, onDelete }) {
   return (
     <li className="categoryListing">
-      <Link to={`/category/${listing.type}/${listing.id}`} className='categoryListingLink'>
+      <Link to={`/category/${listing.type}/${id}`} className='categoryListingLink'>
         <img src={listing.imgUrls[0]} alt={listing.name} className='categoryListingImg' />
         <div className="categoryListingDetails">
           <p className="categoryListingLocation">
@@ -14,7 +14,7 @@ function ListingItem({ listing, id, onDelete }) {
           </p>
           <p className="categoryListingName">{listing.name}</p>
           <p className="categoryListingPrice">
-            ${listing.offer ? listing.discountedPrice : listing.regularPrice}
+            ${listing.offer ? listing.discountPrice : listing.regularPrice}
             {listing.type === 'rent' && ' / Month'}
           </p>
           <div className="categoryListingInfoDiv">
