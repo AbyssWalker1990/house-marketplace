@@ -51,6 +51,35 @@ function Listing() {
     <div className="listingDetails">
       <p className="listingName">{listing.name} - ${listing.offer ? listing.discountPrice: listing.regularPrice}</p>
       <p className="listingLocation">{listing.location}</p>
+      <p className="listingType">
+        For {listing.type === 'rent' ? 'Rent' : 'Sale'}
+      </p>
+      {listing.offer && (
+        <p className="discountPrice">
+          ${listing.regularPrice - listing.discountPrice} discount
+        </p>
+      )}
+      <ul className="listingDetailsList">
+        <li>
+          {listing.bedrooms > 1 ? `${listing.bedrooms} bedrooms` : '1 bedroom'}
+        </li>
+        <li>
+          {listing.bathrooms > 1 ? `${listing.bathrooms} bathrooms` : '1 bathroom'}
+        </li>
+        <li>
+          {listing.parking && 'Parking spot'}
+          {listing.furnished && 'Furnished'}
+        </li>
+      </ul>
+
+      <p className="listingLocationTitle">Location</p>
+      {/* MAP */}
+
+      {auth.currentUser?.uid !== listing.userRef && (
+        <Link to={`/contact/${listing.userRef}?listingName=${listing.name}&listingLocation=${listing.location}`} className='primaryButton'>
+          Contact Landlord
+        </Link>
+      )}
     </div>
   </main>  
 }
