@@ -2,9 +2,11 @@ import { useState, useEffect } from "react"
 import { Link, useNavigate, useParams } from "react-router-dom"
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet"
 import { Navigation, Pagination, Scrollbar, A11y } from "swiper"
-import {Swiper, SwiperSlide} from 'swiper/react'
+import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
-import 'swiper/css/bundle'
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
 import { getDoc, doc } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
 import { db } from "../firebase.config"
@@ -13,9 +15,9 @@ import shareIcon from '../assets/svg/shareIcon.svg'
 import ListingItem from "../components/ListingItem"
 
 function Listing() {
-  const [listing, setListing] = useState(null) 
-  const [loading, setLoading] = useState(true) 
-  const [shareLinkCopied, setShareLinkCopied] = useState(false) 
+  const [listing, setListing] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [shareLinkCopied, setShareLinkCopied] = useState(false)
 
   const navigate = useNavigate()
   const params = useParams()
@@ -41,16 +43,22 @@ function Listing() {
   }
 
   return <main>
-    <Swiper slidesPerView={1} pagination={{clickable: true}}>
+
+    <Swiper slidesPerView={1} pagination={{ clickable: true }}
+      modules={[Navigation, Pagination, Scrollbar, A11y]}>
       {listing.imgUrls.map((url, index) => (
         <SwiperSlide key={index}>
-          <div style={{background: `url(${listing.imgUrls[index]}) center no-repeat`,
-          backgroundSize: 'cover',}} className="swiperSlideDiv" height="200px">
-
+          <div className="swiperSlideDiv1" style={{
+            background: `url(${url}) center no-repeat`,
+            backgroundSize: 'cover', height: '250px'
+          }}>
+            {/* <img src={url} alt="slide" className="swiperSlideImg" /> */}
           </div>
+
         </SwiperSlide>
       ))}
     </Swiper>
+
 
     <div className="shareIconDiv" onClick={() => {
       navigator.clipboard.writeText(window.location.href)
@@ -63,7 +71,7 @@ function Listing() {
       {shareLinkCopied && <p className="linkCopied">Link Copied!</p>}
     </div>
     <div className="listingDetails">
-      <p className="listingName">{listing.name} - ${listing.offer ? listing.discountPrice: listing.regularPrice}</p>
+      <p className="listingName">{listing.name} - ${listing.offer ? listing.discountPrice : listing.regularPrice}</p>
       <p className="listingLocation">{listing.location}</p>
       <p className="listingType">
         For {listing.type === 'rent' ? 'Rent' : 'Sale'}
@@ -87,13 +95,13 @@ function Listing() {
       </ul>
 
       <p className="listingLocationTitle">Location</p>
-      
+
       <div className="leafletContainer">
-        <MapContainer style={{height: '100%', width: '100%'}}
-        center={[listing.geolocation.lat, listing.geolocation.lng]} zoom='13'
-        scrollWheelZoom='false'>
+        <MapContainer style={{ height: '100%', width: '100%' }}
+          center={[listing.geolocation.lat, listing.geolocation.lng]} zoom='13'
+          scrollWheelZoom='false'>
           <TileLayer attribution='&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-          url='https://tile.openstreetmap.org/{z}/{x}/{y}.png'/>
+            url='https://tile.openstreetmap.org/{z}/{x}/{y}.png' />
           <Marker position={[listing.geolocation.lat, listing.geolocation.lng]}>
             <Popup>{listing.location}</Popup>
           </Marker>
@@ -106,7 +114,7 @@ function Listing() {
         </Link>
       )}
     </div>
-  </main>  
+  </main>
 }
 
 export default Listing
