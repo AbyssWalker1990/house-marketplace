@@ -118,7 +118,8 @@ function Profile() {
         <p className="listingText">Your Listings</p>
         <ul className="listingsList">
           {listings.map((listing) => (
-            <ListingItem key={listing.id} listing={listing.data} id={listing.id} onDelete={listing.id}/>
+            <ListingItem key={listing.id} listing={listing.data} 
+            id={listing.id} onDelete={() => onDelete(listing.id)}/>
           ))}
         </ul>
         </>
